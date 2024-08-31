@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+ 
+    <link rel="stylesheet" href="assets/home.css" title="" type="" />
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>ADD DATA</h1>
+        <input type="text" id="Subject" class="input-field" placeholder="Subject" required>
+        <input type="text" id="work" class="input-field" placeholder="work" required>
+        <input type="text" id="dat" class="input-field" placeholder="Date" required>
+        <input type="text" id="notitxt" class="input-field" placeholder="Notification" required>
+
+        <button class="login-btn" onclick="adddata()">Next</button>
+        <a href="temp/index.html"><button class="login-btn">Home</button></a>
+    </div>
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3KcQSG8THJnpzyr_vlOsFx_yNrMwacS8",
+            authDomain: "network-cecda.firebaseapp.com",
+            projectId: "network-cecda",
+            storageBucket: "network-cecda.appspot.com",
+            messagingSenderId: "90708300742",
+            appId: "1:90708300742:web:c383d50386d48d3a9dd8c7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Get a reference to the database service
+        const db = getDatabase(app);
+
+        // Define the adddata function and make it global
+        window.adddata = function() {
+            var Subject = document.getElementById('Subject').value;
+            var work = document.getElementById('work').value;
+            var dat= document.getElementById('dat').value;
+            var notitxt= document.getElementById('notitxt').value;
+
+            console.log(Subject, work, dat, notitxt);
+
+            // Create a unique key for the new data
+            const newKey = Date.now();
+
+            // Set the data in Firebase Realtime Database
+            set(ref(db, 'tasks/' + newKey), {
+                Subject: Subject,
+                Work: work,
+                Date: dat,
+                Notes: notitxt
+            }).then(() => {
+                alert('Data stored successfully!');
+            }).catch((error) => {
+                alert('Error storing data: ' + error.message);
+            });
+        };
+    </script>
+</body>
+
+</html>

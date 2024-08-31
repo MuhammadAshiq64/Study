@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simple design</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="how to use  icon offline/bootstrap-icons.css">
+
+<body>
+    <nav>
+        <a href="#" class="active">home</a>
+        <a href="#">subscribe</a>
+        <a href="#">help</a>
+        <a href="#">Feature</a>
+        <a href="#">contact Us</a>
+        <div class="navbtn">
+            <p class="navtitle">
+                <i class="bi-list icon" id="icon" onclick="showside()"></i>
+                <span>6Network</span>
+            </p>
+        </div>
+    </nav>
+    <div class="sidebar" id="sidebar" style="display: none;">
+        <p>
+            6Network <br> featured blog post
+        </p>
+        <a href="#" class="sidactive">home</a>
+        <a href="#">subscribe</a>
+        <a href="#">help</a>
+        <a href="#">Feature</a>
+        <a href="#">contact Us</a>
+
+    </div>
+    <div class="intro">
+        <p>
+            6Network <br>featured blog post
+        </p>
+        <p>
+            Multiple lines of text that form the lede, informing new readers
+            quickly and efficiently about what’s most interesting in this post’s
+            contents.
+        </p>
+
+        <a href="#">Continue reading...</a>
+        <img src="img/channels4_profile-removebg-preview.png" alt="">
+    </div>
+
+    <!-- blogers div -->
+    <div id="latest-data">
+
+    </div>
+
+    <p class="ntname">
+        6Network
+    </p>
+    <footer>
+        &copy; 2019-2024 Powered By Silent Joker. <br>
+        All Rights Reserved
+    </footer>
+    <script type="module">
+        
+
+
+
+
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, query, orderByKey, limitToLast, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3KcQSG8THJnpzyr_vlOsFx_yNrMwacS8",
+            authDomain: "network-cecda.firebaseapp.com",
+            projectId: "network-cecda",
+            storageBucket: "network-cecda.appspot.com",
+            messagingSenderId: "90708300742",
+            appId: "1:90708300742:web:c383d50386d48d3a9dd8c7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Get a reference to the database service
+        const db = getDatabase(app);
+
+        // Get the latest added data
+        const latestDataRef = query(ref(db, 'tasks'), orderByKey(), limitToLast(1));
+
+        onValue(latestDataRef, (snapshot) => {
+            const data = snapshot.val();
+            const latestKey = Object.keys(data)[0];
+            const latestData = data[latestKey];
+
+            const displayDiv = document.getElementById('latest-data');
+            displayDiv.innerHTML = `
+
+            <div class="postflx">
+
+<div class="blog-Contaner">
+
+    <p class="Subject">
+        ${latestData.Subject}
+    </p>
+    <p class="work">
+        ${latestData.Work}
+    </p>
+    <p class="dat">
+        ${latestData.Date}
+    </p>
+</div>
+
+<div class="blog-Contaner">
+    <p class="notitilt">
+        Notification
+    </p>
+    <p class="noti">
+        ${latestData.Notes}
+    </p>
+    <p class="dat">
+        Today
+    </p>
+</div>
+
+</div>
+
+            `;
+        });
+
+
+
+function showside(){
+    if(document.getElementById('sidebar').style.display==='none'){
+        document.getElementById('sidebar').style.display='block';
+        document.getElementById('icon').className='bi-chevron-double-up icon'
+        
+    }else{
+        document.getElementById('sidebar').style.display='none';
+        document.getElementById('icon').className='bi-list icon'
+    }
+}
+
+    </script>
+</body>
+
+</html>
